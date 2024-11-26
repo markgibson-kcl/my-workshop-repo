@@ -1,0 +1,52 @@
+version: '4.0'
+
+actions:
+  dummy_dataset_1:
+    run: r:latest analysis/dummy_definition_1.R
+    outputs:
+      highly_sensitive:
+        dataset: output/dummy_dataset_1.csv.gz
+
+  generate_dataset_1:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_1.py 
+      --output output/dataset_1.csv.gz
+      --dummy-data-file output/dummy_dataset_1.csv.gz
+    needs: [dummy_dataset_1]
+    outputs:
+      highly_sensitive:
+        dataset: output/dataset_1.csv.gz
+  
+  dummy_dataset_2a:
+    run: r:latest analysis/dummy_definition_2a.R
+    outputs:
+      highly_sensitive:
+        dataset: output/dummy_dataset_2a.arrow
+
+  dummy_dataset_2b:
+    run: r:latest analysis/dummy_definition_2b.R
+    outputs:
+      highly_sensitive:
+        dataset: output/dummy_dataset_2b.arrow
+
+  dummy_dataset_2c:
+      run: ehrql:v1 generate-dataset analysis/dataset_definition_2.py
+        --output output/dummy_dataset_2c.arrow
+        --dummy-data-file output/dummy_dataset_2b.arrow
+      needs: [dummy_dataset_2b]
+      outputs:
+        highly_sensitive:
+          dataset: output/dummy_dataset_2c.arrow
+
+  generate_dataset_2:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_2.py
+      --output output/dataset_2.arrow
+    outputs:
+      highly_sensitive:
+        dataset: output/dataset_2.arrow
+
+#  compare_dataset_2:
+#    run: r:latest analysis/compare_definition_2.R
+#    needs: [dummy_dataset_2a, dummy_dataset_2b, dummy_dataset_2c, generate_dataset_2]
+#    outputs:
+#      highly_sensitive:
+#        csv: output/compare_dataset_2.csv

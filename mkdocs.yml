@@ -1,0 +1,35 @@
+site_name: OpenSAFELY Symposium 2024 Dummy Data Workshop
+repo_url: https://github.com/opensafely/dummy-data-workshop
+
+nav:
+  - Welcome: index.md
+  - Dummy data in OpenSAFELY: dummy_data_in_opensafely.md
+  - Building your own dummy data in R: dummy_data_in_r.md
+   
+docs_dir: docs_src
+site_dir: site
+
+theme:
+  name: material
+  logo: images/icon.svg
+  favicon: images/icon.svg
+  features:
+    - content.code.copy
+
+markdown_extensions:
+  - toc:
+      permalink: True
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
